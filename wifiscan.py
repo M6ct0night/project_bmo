@@ -1,3 +1,4 @@
+import subprocess
 import re
 from cardmon import read_card2
 import tkinter as tk

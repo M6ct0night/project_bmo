@@ -1,4 +1,3 @@
-import subprocess
 import re
 from cardmon import read_card2
 import tkinter as tk
@@ -7,12 +6,20 @@ import os
 
 # Ağ kartı arayüzünü okuma
 interface2 = read_card2()
+print("scan başlatıldı")
 
+def kill_interfering_processes():
+    """NetworkManager ve wpa_supplicant gibi süreçleri sonlandırır."""
+    try:
+        subprocess.run(['sudo', 'airmon-ng', 'check', 'kill'], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Süreçleri sonlandırırken hata: {e}")
 
 # Ağ taramasını yapan fonksiyon
 def scan_network(interface):
+    kill_interfering_processes()
     # Airmon-ng komutunu kullanarak, ağ taraması yapmak için kullanılan arayüzü başlatıyoruz
-    subprocess.run(['airmon-ng', 'start', interface])
+    subprocess.run(['airmon-ng', 'start', interface], check=True, capture_output=True, text=True)
 
     # İstenilen ağları tarama komutunu çalıştırıyoruz
     output = subprocess.check_output(['airodump-ng', '--output-format', 'csv', '--write', 'network_scan', interface])
@@ -72,7 +79,7 @@ def display_networks(networks):
             update_listbox()  # Listbox'ı güncelle
         except Exception as e:
             messagebox.showerror("Hata", f"Ağ taraması sırasında bir hata oluştu: {e}")
-
+            print("tarama hatası")
         # Tarama işlemini belirli bir aralıkla tekrar başlatıyoruz (2 saniye aralıklarla)
         root.after(2000, start_scanning)
 

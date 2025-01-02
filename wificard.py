@@ -19,7 +19,7 @@ def change_family_members_back(event):
 
     # Şu anki metni değiştir
     current_text = label.cget("text")
-    truecard=current
+   
 
     # Yeni metni bulmak için mevcut metnin konumunu bul
     if current_text in interfaces:

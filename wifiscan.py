@@ -17,13 +17,13 @@ def kill_interfering_processes():
         print(f"Süreçleri sonlandırırken hata: {e}")
 
 # Ağ taramasını yapan fonksiyon
-def scan_network(interface):
+def scan_network(interface2):
     kill_interfering_processes()
     # Airmon-ng komutunu kullanarak, ağ taraması yapmak için kullanılan arayüzü başlatıyoruz
-    subprocess.run(['airmon-ng', 'start', interface], check=True, capture_output=True, text=True)
+    subprocess.run(["sudo",'airmon-ng', 'start', interface2], check=True, capture_output=True, text=True)
 
     # İstenilen ağları tarama komutunu çalıştırıyoruz
-    output = subprocess.check_output(['airodump-ng', '--output-format', 'csv', '--write', 'network_scan', interface])
+    output = subprocess.check_output(['airodump-ng', '--output-format', 'csv', '--write', 'network_scan', interface2])
 
     # CSV dosyasındaki bilgileri okuyoruz
     with open('network_scan-01.csv', 'r') as file:

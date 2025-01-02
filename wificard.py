@@ -74,7 +74,7 @@ cardd = ""
 def stagame(event):
     global cardd
     cardd = label.cget("text")
-    trueval= cardd[::-1]
+    trueval= cardd[:-1]
     # 'card.txt' dosyasına seçilen arayüzü kaydet
     with open("card.txt", "w") as file:
         file.write(trueval)

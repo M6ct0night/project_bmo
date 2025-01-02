@@ -19,6 +19,7 @@ def change_family_members_back(event):
 
     # Şu anki metni değiştir
     current_text = label.cget("text")
+    truecard=current
 
     # Yeni metni bulmak için mevcut metnin konumunu bul
     if current_text in interfaces:
@@ -73,10 +74,10 @@ cardd = ""
 def stagame(event):
     global cardd
     cardd = label.cget("text")
-
+    trueval= cardd[::-1]
     # 'card.txt' dosyasına seçilen arayüzü kaydet
     with open("card.txt", "w") as file:
-        file.write(cardd)
+        file.write(trueval)
 
     # 'badbmo.py' dosyasını çalıştır
     os.system("python badbmo.py")
